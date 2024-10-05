@@ -11,9 +11,15 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SignUpIndexImport } from './routes/sign-up/index'
 import { Route as LogInIndexImport } from './routes/log-in/index'
 
 // Create/Update Routes
+
+const SignUpIndexRoute = SignUpIndexImport.update({
+  path: '/sign-up/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LogInIndexRoute = LogInIndexImport.update({
   path: '/log-in/',
@@ -31,6 +37,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LogInIndexImport
       parentRoute: typeof rootRoute
     }
+    '/sign-up/': {
+      id: '/sign-up/'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -38,32 +51,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/log-in': typeof LogInIndexRoute
+  '/sign-up': typeof SignUpIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/log-in': typeof LogInIndexRoute
+  '/sign-up': typeof SignUpIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/log-in/': typeof LogInIndexRoute
+  '/sign-up/': typeof SignUpIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/log-in'
+  fullPaths: '/log-in' | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/log-in'
-  id: '__root__' | '/log-in/'
+  to: '/log-in' | '/sign-up'
+  id: '__root__' | '/log-in/' | '/sign-up/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   LogInIndexRoute: typeof LogInIndexRoute
+  SignUpIndexRoute: typeof SignUpIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   LogInIndexRoute: LogInIndexRoute,
+  SignUpIndexRoute: SignUpIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -78,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/log-in/"
+        "/log-in/",
+        "/sign-up/"
       ]
     },
     "/log-in/": {
       "filePath": "log-in/index.tsx"
+    },
+    "/sign-up/": {
+      "filePath": "sign-up/index.tsx"
     }
   }
 }
