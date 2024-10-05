@@ -16,19 +16,20 @@ declare module '@tanstack/react-router' {
 }
 
 const TanStackRouterDevtools =
-  import.meta.env.NODE_ENV === 'production'
-    ? () => null // Render nothing in production
-    : lazy(() =>
-        // Lazy load in development
-        import('@tanstack/router-devtools').then((res) => ({
-          default: res.TanStackRouterDevtools,
-        })),
-      )
+  import.meta.env.MODE === 'development'
+    ? lazy(() =>
+      // Lazy load in development
+      import('@tanstack/router-devtools').then((res) => ({
+        default: res.TanStackRouterDevtools,
+      })),
+    )
+    : () => null
 
 
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
   const root = createRoot(rootElement)
+
   root.render(
     <StrictMode>
       <RouterProvider router={router} />
