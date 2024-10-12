@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
     "typeRoots": ["src/types/"],
-    "types": [
-      "vite/client"
-    ],
+    "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
