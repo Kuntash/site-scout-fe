@@ -1,3 +1,3 @@
 export const DashboardScreen = () => {
-  return <div className="min-h-screen w-full">Dashboard</div>;
+  return <div className="w-full">Dashboard</div>;
 };

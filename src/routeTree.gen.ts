@@ -17,6 +17,7 @@ import { Route as SignUpIndexImport } from "./routes/sign-up/index";
 import { Route as LogInIndexImport } from "./routes/log-in/index";
 import { Route as authLayoutImport } from "./routes/(auth)/_layout";
 import { Route as authLayoutIndexImport } from "./routes/(auth)/_layout/index";
+import { Route as authLayoutCompetitorWatchImport } from "./routes/(auth)/_layout/competitor-watch";
 
 // Create Virtual Routes
 
@@ -46,6 +47,11 @@ const authLayoutRoute = authLayoutImport.update({
 
 const authLayoutIndexRoute = authLayoutIndexImport.update({
   path: "/",
+  getParentRoute: () => authLayoutRoute,
+} as any);
+
+const authLayoutCompetitorWatchRoute = authLayoutCompetitorWatchImport.update({
+  path: "/competitor-watch",
   getParentRoute: () => authLayoutRoute,
 } as any);
 
@@ -81,6 +87,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof SignUpIndexImport;
       parentRoute: typeof rootRoute;
     };
+    "/(auth)/_layout/competitor-watch": {
+      id: "/_layout/competitor-watch";
+      path: "/competitor-watch";
+      fullPath: "/competitor-watch";
+      preLoaderRoute: typeof authLayoutCompetitorWatchImport;
+      parentRoute: typeof authLayoutImport;
+    };
     "/(auth)/_layout/": {
       id: "/_layout/";
       path: "/";
@@ -94,10 +107,12 @@ declare module "@tanstack/react-router" {
 // Create and export the route tree
 
 interface authLayoutRouteChildren {
+  authLayoutCompetitorWatchRoute: typeof authLayoutCompetitorWatchRoute;
   authLayoutIndexRoute: typeof authLayoutIndexRoute;
 }
 
 const authLayoutRouteChildren: authLayoutRouteChildren = {
+  authLayoutCompetitorWatchRoute: authLayoutCompetitorWatchRoute,
   authLayoutIndexRoute: authLayoutIndexRoute,
 };
 
@@ -119,11 +134,13 @@ export interface FileRoutesByFullPath {
   "/": typeof authLayoutIndexRoute;
   "/log-in": typeof LogInIndexRoute;
   "/sign-up": typeof SignUpIndexRoute;
+  "/competitor-watch": typeof authLayoutCompetitorWatchRoute;
 }
 
 export interface FileRoutesByTo {
   "/log-in": typeof LogInIndexRoute;
   "/sign-up": typeof SignUpIndexRoute;
+  "/competitor-watch": typeof authLayoutCompetitorWatchRoute;
   "/": typeof authLayoutIndexRoute;
 }
 
@@ -133,15 +150,23 @@ export interface FileRoutesById {
   "/_layout": typeof authLayoutRouteWithChildren;
   "/log-in/": typeof LogInIndexRoute;
   "/sign-up/": typeof SignUpIndexRoute;
+  "/_layout/competitor-watch": typeof authLayoutCompetitorWatchRoute;
   "/_layout/": typeof authLayoutIndexRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/log-in" | "/sign-up";
+  fullPaths: "/" | "/log-in" | "/sign-up" | "/competitor-watch";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/log-in" | "/sign-up" | "/";
-  id: "__root__" | "/" | "/_layout" | "/log-in/" | "/sign-up/" | "/_layout/";
+  to: "/log-in" | "/sign-up" | "/competitor-watch" | "/";
+  id:
+    | "__root__"
+    | "/"
+    | "/_layout"
+    | "/log-in/"
+    | "/sign-up/"
+    | "/_layout/competitor-watch"
+    | "/_layout/";
   fileRoutesById: FileRoutesById;
 }
 
@@ -184,6 +209,7 @@ export const routeTree = rootRoute
       "filePath": "(auth)/_layout.tsx",
       "parent": "/",
       "children": [
+        "/_layout/competitor-watch",
         "/_layout/"
       ]
     },
@@ -192,6 +218,10 @@ export const routeTree = rootRoute
     },
     "/sign-up/": {
       "filePath": "sign-up/index.tsx"
+    },
+    "/_layout/competitor-watch": {
+      "filePath": "(auth)/_layout/competitor-watch.tsx",
+      "parent": "/_layout"
     },
     "/_layout/": {
       "filePath": "(auth)/_layout/index.tsx",

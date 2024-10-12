@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import SignupForm from "@/modules/sign-up/signup-form";
+import { Route as LoginRoute } from "@/routes/log-in";
 import { isAuthenticated } from "@/utils/network";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -40,7 +41,7 @@ const SignupScreen = () => {
           <span className="text-muted-foreground">
             Already have an account?
           </span>
-          <Link to="/log-in" className="text-primary font-bold">
+          <Link to={LoginRoute.to} className="text-primary font-bold">
             Log in
           </Link>
         </div>
