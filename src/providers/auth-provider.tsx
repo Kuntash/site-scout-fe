@@ -1,4 +1,4 @@
-import { useCurrentUserQuery } from "@/hooks/queries/useCurrentUserQuery";
+import { useCurrentUserQuery } from "@/hooks/queries/use-current-user-query";
 import { Suspense } from "react";
 
 type AuthProviderProps = {
